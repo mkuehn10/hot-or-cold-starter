@@ -28,12 +28,43 @@ $(document).ready(function(){
         console.log(numberToGuess);
     }
 
+    function processGuess(event, guess) {
+      // event.preventDefault();
+      $('#userGuess').removeClass('red-border');
+      console.log("Guess entered " + guess);
+
+
+      $('#userGuess').val('');
+    }
+
+    function validateGuess(guess) {
+      if (parseInt(guess) == guess) {
+        processGuess(event, guess);
+      } else {
+        console.log("Invalid guess!");
+
+        $('#userGuess').addClass('red-border');
+        $('#userGuess').val('');
+      }
+
+    }
+
     newGame();
 
     $('.new').click(newGame);
 
+    $('form').submit(function(event) {
+      event.preventDefault();
+      // $('#guessButton').val();
+      validateGuess($('#userGuess').val());
+      //processGuess(event, $('#userGuess').val());
+    });
 
-
+    $('#guessButton').keypress(function(event) {
+      if (event.keyCode === 13) {
+        $('form').submit();
+      }
+    });
 });
 
 
